@@ -49,3 +49,21 @@ or
 yosys -V
 ```
 Prints **Yosys 0.56+30 (git sha1 8c71226d0, clang++ 18.1.8 -fPIC -O3)**.
+# Setup
+The **Yosys Tool Github Repository** has some Verilog design files and liberty files in **examples, techlibs & tests** directories to experiment with the tool. So, you can follow the below steps to clone the repository and then using git sparse-checkout to limit the files downloaded to only the specified directories:
+1. Initialize a sparse checkout:
+```
+git clone --no-checkout https://github.com/YosysHQ/yosys.git
+cd yosys
+git sparse-checkout init --no-cone
+```
+2. Specify the directories you want to access:
+```
+git sparse-checkout set examples techlibs /tests
+```
+Here **tests** directory is explicitly described as **/tests** since there is a sub-directrory named **tests** present inside both **docs & passes** directories.
+
+3. Checkout the files:
+```
+git checkout main
+```
