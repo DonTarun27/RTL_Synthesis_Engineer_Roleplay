@@ -1,19 +1,19 @@
 # Introduction
-Yosys Tool is part of the Tabby CAD Suite and the OSS CAD Suite! The easiest way to use yosys is to install the binary software suite, which contains all required dependencies and related tools.
-1. Contact YosysHQ for a **Tabby CAD Suite** Evaluation License and download link  
+**Yosys Open-Source Tool** is part of the Tabby CAD Suite and the OSS CAD Suite! The easiest way to use yosys is to install the binary software suite, which contains all required dependencies and related tools.
+1. Contact **YosysHQ** for a **Tabby CAD Suite Evaluation License** and download link  
 OR go to https://github.com/YosysHQ/oss-cad-suite-build/releases to download the free **OSS CAD Suite**.
-2. OSS CAD Suite is a binary software distribution for a number of open source software used in digital logic design. You will find tools for RTL synthesis, formal hardware verification, place & route, FPGA programming, and testing with support for HDLs like Verilog, Migen, and Amaranth.
-3. Make sure to get a Tabby CAD Suite Evaluation License if you need features such as industry-grade SystemVerilog and VHDL parsers!
-4. For more information about the difference between Tabby CAD Suite and the OSS CAD Suite, please visit https://www.yosyshq.com/tabby-cad-datasheet
+2. **OSS CAD Suite** is a binary software distribution for a number of open source software used in digital logic design. You will find tools for RTL synthesis, formal hardware verification, place & route, FPGA programming, and testing with support for HDLs like Verilog, Migen, and Amaranth.
+3. Make sure to get a **Tabby CAD Suite Evaluation License** if you need features such as industry-grade SystemVerilog and VHDL parsers!
+4. For more information about the difference between the Tabby CAD Suite and the OSS CAD Suite, please visit https://www.yosyshq.com/tabby-cad-datasheet
 5. Many Linux distributions also provide Yosys binaries, some more up to date than others. Check with your package manager!
 # Installation
-As I am using WSL (Windows Subsytem Linux) - Ubuntu 24.04.2 LTS for all the Open-Source Tools Installation, I checked the Yosys Tool Version in the apt package manager and found it to be v0.33 which is a very old version compared to the latest v0.56  
+As I am using **WSL (Windows Subsytem Linux) - Ubuntu 24.04.2 LTS** for all the Open-Source Tools Installation, I have checked the **Yosys Tool** Version in the **apt** package manager and found it to be v0.33 which is a very old version compared to the latest v0.56  
 So, I have chosen to download and setup the free **OSS CAD Suite** by following the below steps:
 1. Download an archive matching your OS from the releases page - https://github.com/YosysHQ/oss-cad-suite-build/releases by running the below command:
 ```
 wget https://github.com/YosysHQ/oss-cad-suite-build/releases/download/2025-08-11/oss-cad-suite-linux-x64-20250811.tgz
 ```
-2. Extract the archive to a location of your choice. I have extracted it to my user home directory (\~) by running the below commands:
+2. Extract the archive to a location of your choice. I have extracted it to my **user home directory (\~)** by running the below commands:
 ```
 cd ~
 tar -xf oss-cad-suite-linux-x64-20250811.tgz
@@ -34,13 +34,13 @@ alias oss='source /home/$USER/oss-cad-suite/environment'
 ```
 source ~/.bashrc
 ```
-Now, whenever you open a new terminal, you can run **oss** as command to setup the **OSS CAD Suite** environment and then run **Yosys Tool** in the terminal.
+Now whenever you open a new terminal, you can run **oss** as command to setup the **OSS CAD Suite** environment and then run **Yosys Tool** in the current terminal.
 
 6. Check the Yosys Tool Version by running the below commands:
 ```
 oss
 ```
-To setup the **OSS CAD Suite** environment.
+This is to setup the **OSS CAD Suite** environment.
 ```
 yosys --version
 ```
@@ -49,21 +49,21 @@ or
 yosys -V
 ```
 Prints **Yosys 0.56+30 (git sha1 8c71226d0, clang++ 18.1.8 -fPIC -O3)**.
-# Setup
-The **Yosys Tool Github Repository** has some Verilog design files and liberty files in **examples, techlibs & tests** directories to experiment with the tool. So, you can follow the below steps to clone the repository and then using git sparse-checkout to limit the files downloaded to only the specified directories:
+# Tool Experiment Setup
+The **Yosys Tool Github Repository** has some Verilog design files and liberty files in **examples, techlibs & tests** directories to experiment with the tool. So, you can follow the below steps to clone the repository and then using git sparse-checkout to limit the directories & files downloaded to only the specified ones:
 1. Initialize a sparse checkout:
 ```
 git clone --no-checkout https://github.com/YosysHQ/yosys.git
 cd yosys
 git sparse-checkout init --no-cone
 ```
-2. Specify the directories you want to access:
+2. Specify the directories & files you want to access:
 ```
-git sparse-checkout set examples techlibs /tests
+git sparse-checkout set examples techlibs /tests /README.md
 ```
-Here **tests** directory is explicitly described as **/tests** since there is a sub-directrory named **tests** present inside both **docs & passes** directories.
+Here **tests** directory is explicitly described as **/tests** specifying its directory path since there is a sub-directrory named **tests** present inside both **docs & passes** directories. And **README.md** file is explicitly described as **/README.md** specifying its file path since we want a single file.
 
-3. Checkout the files:
+3. Checkout the specified directories & files:
 ```
 git checkout main
 ```
