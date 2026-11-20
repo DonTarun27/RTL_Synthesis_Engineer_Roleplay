@@ -7,40 +7,36 @@ OR go to https://github.com/YosysHQ/oss-cad-suite-build/releases to download the
 4. For more information about the difference between the Tabby CAD Suite and the OSS CAD Suite, please visit https://www.yosyshq.com/tabby-cad-datasheet
 5. Many Linux distributions also provide Yosys binaries, some more up to date than others. Check with your package manager!
 # Installation
-As I am using **WSL (Windows Subsytem Linux) - Ubuntu 24.04.2 LTS** for all the Open-Source Tools Installation, I have checked the **Yosys Tool** Version in the **apt** package manager and found it to be v0.33 which is a very old version compared to the latest v0.56  
-So, I have chosen to download and setup the free **OSS CAD Suite** by following the below steps:
-1. Download an archive matching your OS from the releases page - https://github.com/YosysHQ/oss-cad-suite-build/releases by running the below command:
-```
-wget https://github.com/YosysHQ/oss-cad-suite-build/releases/download/2025-08-11/oss-cad-suite-linux-x64-20250811.tgz
-```
-2. Extract the archive to a location of your choice. I have extracted it to my **user home directory (\~)** by running the below commands:
+As we are using **WSL (Windows Subsytem Linux) - Ubuntu 26.04.1 LTS** for all the Open-Source EDA Tools Installation, checking the **Yosys Tool** package in Ubuntu's apt repository (apt show yosys) shows v0.52+2.
+
+Because Ubuntu freezes apt package versions at release time, the repository version trails behind upstream development (currently v0.71+59). Instead of installing an outdated version via apt, we use the OSS CAD Suite binary bundle—which provides the latest Yosys alongside matching, up-to-date versions of Nextpnr, Verilator, Icarus Verilog, GTKWave, and openFPGALoader in one self-contained directory.
+
+So, follow the below steps to download and setup the free **OSS CAD Suite**:
+1. Download the latest linux-x64 archive from the YosysHQ OSS CAD Suite Releases page - https://github.com/YosysHQ/oss-cad-suite-build/releases (look for oss-cad-suite-linux-x64-<YYYYMMDD>.tgz) by running the below command:
 ```
 cd ~
-tar -xf oss-cad-suite-linux-x64-20250811.tgz
+wget https://github.com/YosysHQ/oss-cad-suite-build/releases/download/2026-11-20/oss-cad-suite-linux-x64-20261120.tgz
+```
+2. Extract the archive and move it to /opt. I have extracted it to my **user home directory (\~)** by running the below commands:
+```
+tar -xf oss-cad-suite-linux-x64-*.tgz
+sudo mv oss-cad-suite /opt/
 ```
 3. Remove the archive to free disk space by running the below command:
 ```
-rm oss-cad-suite-linux-x64-20250811.tgz
+rm oss-cad-suite-linux-x64-*.tgz
 ```
-4. Now to setup the **OSS CAD Suite** environment in our terminal, run the below command:
+4. Now to set up the OSS CAD Suite environment in our terminal and apply it immediately, run the below commands:
 ```
-vi ~/.bashrc
-```
-And then insert the below line at the end of the file:
-```
-alias oss='source /home/$USER/oss-cad-suite/environment'
-```
-5. Log Out & Log Back In or run the below command in the current terminal:
-```
+echo 'export PATH="/opt/oss-cad-suite/bin:$PATH"' >> ~/.bashrc
+echo "alias oss='source /opt/oss-cad-suite/environment'" >> ~/.bashrc
 source ~/.bashrc
 ```
-Now whenever you open a new terminal, you can run **oss** as command to setup the **OSS CAD Suite** environment and then run **Yosys Tool** in the current terminal.
+Now, in your current terminal and any new terminal you open:
+• Core CLI tools (such as yosys, iverilog, verilator, nextpnr, and gtkwave) are available immediately without any extra setup.
+• Python-based HDL tools and full environment variables (such as Amaranth, LiteX, or yosys-config) can be activated on demand by running **oss** as command in your terminal.
 
-6. Check the Yosys Tool Version by running the below commands:
-```
-oss
-```
-This is to setup the **OSS CAD Suite** environment.
+5. Check the Yosys tool version directly by running the below command:
 ```
 yosys --version
 ```
@@ -48,7 +44,14 @@ or
 ```
 yosys -V
 ```
-Prints **Yosys 0.56+30 (git sha1 8c71226d0, clang++ 18.1.8 -fPIC -O3)**.
+Prints **Yosys 0.71+59 (git sha1 d9358f38c, Release, Clang /usr/bin/clang++ 21.1.8)**.
+
+6. **(Optional)** If you want to verify the full environment alias for Python HDL tools, run the below commands:
+```
+oss
+which python3
+```
+This activates the **OSS CAD Suite** environment and points python3 to /opt/oss-cad-suite/py3bin/python3.
 # Tool Experiment Setup
 The **Yosys Tool Github Repository** has some Verilog design files and liberty files in **examples, techlibs & tests** directories to experiment with the tool. So, you can follow the below steps to clone the repository and then using git sparse-checkout to limit the directories & files downloaded to only the specified ones:
 1. Initialize a sparse checkout:
